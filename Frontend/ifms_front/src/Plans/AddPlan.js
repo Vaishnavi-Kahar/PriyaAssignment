@@ -20,7 +20,7 @@ function AddPlan() {
                 rooms: [{ roomNumber, capacity, booked: false }],
             };
 
-            await axios.post('http://localhost:8000/api/add-floorplan', FloorPlan);
+            await axios.post('https://moveinsyncassignment.onrender.com/api/add-floorplan', FloorPlan);
 
             // Clear the form fields after successful submission
             setName('');
