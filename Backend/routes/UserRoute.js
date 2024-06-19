@@ -1,8 +1,10 @@
 
 const express = require("express");
-const app = express.Router();
+const router = express.Router();
+const User= require("../models/Usermodel");
+
 // GET all users
-app.get('/all-users', async (req, res) => {
+router.get('/all-users', async (req, res) => {
   try {
     const users = await User.find();
     res.json(users);
@@ -10,11 +12,12 @@ app.get('/all-users', async (req, res) => {
     res.status(500).send(error);
   }
 });
-app.get("/*", (req, res) => {
+
+router.get("/*", (req, res) => {
   res.send("You are on the wrong route");
 });
 // GET a single user by ID
-app.get('/users/:id', async (req, res) => {
+router.get('/users/:id', async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (user) {
@@ -28,7 +31,7 @@ app.get('/users/:id', async (req, res) => {
 });
 
 // POST a new user
-app.post('/add-user', async (req, res) => {
+router.post('/add-user', async (req, res) => {
   const user = new User(req.body);
   try {
     const newUser = await user.save();
@@ -39,7 +42,7 @@ app.post('/add-user', async (req, res) => {
 });
 
 // PUT update a user by ID
-app.put('/update-user/:id', async (req, res) => {
+router.put('/update-user/:id', async (req, res) => {
   try {
     const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (user) {
@@ -53,7 +56,7 @@ app.put('/update-user/:id', async (req, res) => {
 });
 
 // PATCH update a user by ID
-app.patch('/update-user/:id', async (req, res) => {
+router.patch('/update-user/:id', async (req, res) => {
   try {
     const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (user) {
@@ -68,7 +71,7 @@ app.patch('/update-user/:id', async (req, res) => {
 
 
 // DELETE a user by ID
-app.delete('/delete-user/:id', async (req, res) => {
+router.delete('/delete-user/:id', async (req, res) => {
   try {
     const deletedUser = await User.findByIdAndDelete(req.params.id);
     if (deletedUser) {
@@ -80,3 +83,4 @@ app.delete('/delete-user/:id', async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+module.exports = router; 

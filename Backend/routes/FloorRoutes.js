@@ -6,7 +6,7 @@ const FloorPlan = require("../models/FloorPlanModel");
 // GET all floor plans
 router.get('/floorplans', async (req, res) => {
   try {
-    const floorPlans = await FloorPlan.find();
+    const floorPlans = await FloorPlan.findAll();
     res.json(floorPlans);
   } catch (error) {
     res.status(500).json({ message: error.message });
